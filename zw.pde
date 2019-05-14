@@ -24,7 +24,7 @@ class Reproduction {
     }
     knots.remove(knots.size() - 1);
     
-    return 1 - (100 / sum);
+    return 100 / sum;
   }
   //---------------------------------------------------------------------------------------
   
@@ -94,29 +94,30 @@ class Reproduction {
         }
         break;
         //----------------------------
-        case 2: {
-          
-          int split_index = genome_length / 2;
-          
-          ArrayList<PVector> child = new ArrayList<PVector>();
-          
-          for(int k=0; k<=split_index - 1; k++) {
-            child.add(parent2.get(k));
-          }
-          for(int k=split_index; k<=genome_length - 1; k++) {
-            for(int g=0; g<=genome_length - 1; g++) {
-              
-              if(child.contains(parent1.get(g)) == false) {
-                child.add(parent1.get(g));
-                break;
-              }
-              
-            }
-          }
-          
-          children.add(mutation(child));
-
+      case 2: {
+        
+        int split_index = genome_length / 2;
+        
+        ArrayList<PVector> child = new ArrayList<PVector>();
+        
+        for(int k=0; k<=split_index - 1; k++) {
+          child.add(parent2.get(k));
         }
+        for(int k=split_index; k<=genome_length - 1; k++) {
+          for(int g=0; g<=genome_length - 1; g++) {
+            
+            if(child.contains(parent1.get(g)) == false) {
+              child.add(parent1.get(g));
+              break;
+            }
+            
+          }
+        }
+        
+        children.add(mutation(child));
+
+      }
+      break;
         //____________________________
       }
       
@@ -132,11 +133,11 @@ class Reproduction {
     double check = Math.random();
     if(check <= mutation_probability) {
       
-      int random_index1 = r.nextInt(((genome_length - 1) - 1) + 1) + 1;
-      int random_index2 = r.nextInt(((genome_length - 1) - 1) + 1) + 1;
+      int random_index1 = r.nextInt((genome_length - 1) + 1);
+      int random_index2 = r.nextInt((genome_length - 1) + 1);
       
       PVector to_switch1 = child.get(random_index1);
-      PVector to_switch2 = child.get(random_index1);
+      PVector to_switch2 = child.get(random_index2);
       
       child.set(random_index1, to_switch2);
       child.set(random_index2, to_switch1);

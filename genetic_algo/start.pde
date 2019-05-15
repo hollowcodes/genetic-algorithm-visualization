@@ -1,4 +1,5 @@
 
+// START
 class Start {
   
   // CONSTRUCTOR
@@ -12,6 +13,7 @@ class Start {
   // SEED
   ArrayList<ArrayList> seed(ArrayList<PVector> knots) {
     
+    // create a population just by shuffeling the seed parent
     ArrayList<ArrayList> gen0 = new ArrayList<ArrayList>();
     for(int i=0; i<=population_size; i++) {
       Collections.shuffle(knots);
@@ -27,6 +29,7 @@ class Start {
     
     int total_knots = genome_length;
     
+    // random create vectors to represent the knots
     ArrayList<PVector> knots = new ArrayList<PVector>();
     for(int i=1; i<=total_knots; i++){
       
@@ -39,6 +42,5 @@ class Start {
     
     return knots;
   }
-  //---------------------------------------------------------------------------------------
   
 }

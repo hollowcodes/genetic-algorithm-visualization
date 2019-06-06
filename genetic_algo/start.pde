@@ -2,10 +2,13 @@
 // START
 class Start {
   
+  int genome_length;
+  int population_size;
+  
   // CONSTRUCTOR
   Start(int genome_length, int population_size) {
-    population_size = population_size;
-    genome_length = genome_length;
+    this.population_size = population_size;
+    this.genome_length = genome_length;
 
   }
   //---------------------------------------------------------------------------------------
@@ -15,7 +18,7 @@ class Start {
     
     // create a population just by shuffeling the seed parent
     ArrayList<ArrayList> gen0 = new ArrayList<ArrayList>();
-    for(int i=0; i<=population_size; i++) {
+    for(int i=0; i<=this.population_size; i++) {
       Collections.shuffle(knots);
       gen0.add(new ArrayList(knots));
     }
@@ -25,13 +28,13 @@ class Start {
   //---------------------------------------------------------------------------------------
   
   // CREATE KNOTS
-  ArrayList<PVector> create_knots(){
+  ArrayList<PVector> create_knots() {
     
-    int total_knots = genome_length;
+    int total_knots = this.genome_length;
     
     // random create vectors to represent the knots
     ArrayList<PVector> knots = new ArrayList<PVector>();
-    for(int i=1; i<=total_knots; i++){
+    for(int i=1; i<=total_knots; i++) {
       
       float x = random(100, 600);
       float y = random(100, 600);
@@ -41,6 +44,7 @@ class Start {
     }
     
     return knots;
+    
   }
   
 }

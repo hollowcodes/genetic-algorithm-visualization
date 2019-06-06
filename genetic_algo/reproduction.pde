@@ -5,11 +5,15 @@ import java.util.Random;
 // REPRODCUTION
 class Reproduction {
   
+  int genome_length;
+  int population_size;
+  float mutation_probability;
+  
   // CONSTRUCTOR
   Reproduction(int genome_length, int population_size, float mutation_probability) {
-    population_size = population_size;
-    genome_length = genome_length;
-    mutation_probability = mutation_probability;
+    this.population_size = population_size;
+    this.genome_length = genome_length;
+    this.mutation_probability = mutation_probability;
   }
   //---------------------------------------------------------------------------------------
   
@@ -37,7 +41,7 @@ class Reproduction {
     
     // store all fitness scores
     ArrayList<Float> fitness_scores = new  ArrayList<Float>();
-    for(int i=0; i<=population_size - 2; i++) {
+    for(int i=0; i<=this.population_size - 2; i++) {
       float fitness = check_fitness(population.get(i));
       fitness_scores.add(fitness);
     }
@@ -67,8 +71,8 @@ class Reproduction {
     Random r = new Random();
         
     ArrayList<ArrayList> children = new ArrayList<ArrayList>();
-    for(int i=0; i<=population_size - 1; i++) {
-      
+    for(int i=0; i<=this.population_size - 1; i++) {
+
       // random choose between different crossover methods
       int choice = r.nextInt((2 - 1) + 1) + 1;
       switch (choice) {
@@ -77,21 +81,20 @@ class Reproduction {
           // random split first parent and pass the elements to the same index of the child,
           // fill the other indices with the elements of the second parent
           
-          int split_index = r.nextInt(((genome_length - 1) - 1) + 1) + 1;
+          int split_index = r.nextInt(((this.genome_length - 1) - 1) + 1) + 1;
 
           ArrayList<PVector> child = new ArrayList<PVector>();
           
           for(int k=0; k<=split_index - 1; k++) {
             child.add(parent1.get(k));
           }
-          for(int k=split_index; k<=genome_length - 1; k++) {
-            for(int g=0; g<=genome_length - 1; g++) {
+          for(int k=split_index; k<=this.genome_length - 1; k++) {
+            for(int g=0; g<=this.genome_length - 1; g++) {
               
               if(child.contains(parent2.get(g)) == false) {
                 child.add(parent2.get(g));
                 break;
               }
-              
             }
           }
           
@@ -100,32 +103,31 @@ class Reproduction {
         }
         break;
         
-      case 2: {
-        // random split second parent and pass the elements to the same index of the child,
-        // fill the other indices with the elements of the first parent
-        
-        int split_index = genome_length / 2;
-        
-        ArrayList<PVector> child = new ArrayList<PVector>();
-        
-        for(int k=0; k<=split_index - 1; k++) {
-          child.add(parent2.get(k));
-        }
-        for(int k=split_index; k<=genome_length - 1; k++) {
-          for(int g=0; g<=genome_length - 1; g++) {
-            
-            if(child.contains(parent1.get(g)) == false) {
-              child.add(parent1.get(g));
-              break;
-            }
-            
+        case 2: {
+          // random split second parent and pass the elements to the same index of the child,
+          // fill the other indices with the elements of the first parent
+          
+          int split_index = this.genome_length / 2;
+          
+          ArrayList<PVector> child = new ArrayList<PVector>();
+          
+          for(int k=0; k<=split_index - 1; k++) {
+            child.add(parent2.get(k));
           }
+          for(int k=split_index; k<=this.genome_length - 1; k++) {
+            for(int g=0; g<=this.genome_length - 1; g++) {
+              
+              if(child.contains(parent1.get(g)) == false) {
+                child.add(parent1.get(g));
+                break;
+              }
+            }
+          }
+          
+          // add possible mutation
+          children.add(mutation(child));
         }
-        
-        // add possible mutation
-        children.add(mutation(child));
-      }
-      break;
+        break;
      
       }
     }
@@ -141,11 +143,11 @@ class Reproduction {
     
     // do a mutation at a certain likelyhood
     double check = Math.random();
-    if(check <= mutation_probability) {
+    if(check <= this.mutation_probability) {
       
       // random switch two elements by their indices
-      int random_index1 = r.nextInt((genome_length - 1) + 1);
-      int random_index2 = r.nextInt((genome_length - 1) + 1);
+      int random_index1 = r.nextInt((this.genome_length - 1) + 1);
+      int random_index2 = r.nextInt((this.genome_length - 1) + 1);
       
       PVector to_switch1 = child.get(random_index1);
       PVector to_switch2 = child.get(random_index2);
